@@ -28,7 +28,10 @@
 	"autoload": {
 		"psr-4": {
 			"ThemePlate\\HTMX\\": "src"
-		}
+		},
+		"files": [
+			"HTMX.php"
+		]
 	},
 	"autoload-dev": {
 		"psr-4": {
