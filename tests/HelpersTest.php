@@ -12,6 +12,7 @@ class HelpersTest extends TestCase {
 			'correct' => array( 'test', 'test' ),
 			'prefixed' => array( '/test', 'test' ),
 			'suffixed' => array( 'test/', 'test' ),
+			'windows' => array( 'C:\folder\test', 'C:/folder/test' ),
 			'extras' => array( '/test// ', 'test' ),
 			'deep'  => array( ' //deep/test', 'deep/test' ),
 			'empty' => array( '', '' ),

@@ -13,6 +13,8 @@ class Helpers {
 
 	public static function prepare_pathname( string $value ): string {
 
+		$value = str_replace( '\\', '/', $value );
+
 		return trim( $value, '/ ' );
 
 	}
