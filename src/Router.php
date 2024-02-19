@@ -66,8 +66,9 @@ class Router {
 			$route = Helpers::prepare_pathname( $wp->query_vars[ $this->prefix ] );
 
 			if ( isset( $this->routes[ $route ] ) ) {
-				$this->dispatch( $route );
-				die();
+				if ( $this->dispatch( $route ) ) {
+					die();
+				}
 			}
 		}
 
@@ -95,9 +96,9 @@ class Router {
 	}
 
 
-	public function dispatch( string $route ): void {
+	public function dispatch( string $route ): bool {
 
-		call_user_func_array( $this->routes[ $route ], array( $route ) );
+		return call_user_func_array( $this->routes[ $route ], array( $route ) );
 
 	}
 

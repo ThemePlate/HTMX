@@ -37,13 +37,13 @@ class Loader {
 	}
 
 
-	public function load( string $template ): void {
+	public function load( string $template ): bool {
 
 		if ( ! $this->is_valid( $template ) ) {
-			return;
+			return false;
 		}
 
-		include $this->file_path( $template );
+		return include $this->file_path( $template );
 
 	}
 
