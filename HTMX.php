@@ -16,6 +16,7 @@ class HTMX {
 
 	public readonly Router $router;
 	public readonly Loader $loader;
+	protected ?string $cdn = null;
 
 
 	public function __construct( string $identifier = null ) {
@@ -52,17 +53,34 @@ class HTMX {
 	}
 
 
+	public function cdn( string $version = 'latest' ): HTMX {
+
+		$this->cdn = $version;
+
+		return $this;
+
+	}
+
+
 	public function assets(): void {
 
-		wp_enqueue_script(
-			'htmx',
-			'https://unpkg.com/htmx.org',
-			array(),
-			'latest',
-			array(
-				'in_footer' => true,
-			)
-		);
+		if ( $this->cdn ) {
+			$version = '@' . $this->cdn;
+
+			if ( '@latest' === $version ) {
+				$version = '';
+			}
+
+			wp_enqueue_script(
+				'htmx',
+				'https://unpkg.com/htmx.org' . $version,
+				array(),
+				$this->cdn,
+				array(
+					'in_footer' => true,
+				)
+			);
+		}
 
 		$config = sprintf(
 			"document.body.addEventListener('htmx:configRequest', function(evt) {evt.detail.headers['HX-Nonce'] = '%s'});",
