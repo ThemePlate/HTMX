@@ -8,6 +8,7 @@ namespace ThemePlate;
 
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use ThemePlate\HTMX\Handler;
 use ThemePlate\HTMX\Helpers;
 use ThemePlate\HTMX\Router;
 use ThemePlate\HTMX\Loader;
@@ -45,7 +46,10 @@ class HTMX {
 				$item->getPathname()
 			);
 
-			$this->router->add( $path, array( $this->loader, 'load' ) );
+			$handler = new Handler( $path );
+
+			$handler->handle( 'GET', array( $this->loader, 'load' ) );
+			$this->router->add( $path, $handler );
 		}
 
 		$this->router->init();

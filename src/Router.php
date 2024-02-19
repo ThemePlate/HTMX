@@ -81,7 +81,7 @@ class Router {
 	}
 
 
-	public function add( string $route, callable $handler ): bool {
+	public function add( string $route, Handler $handler ): bool {
 
 		$route = Helpers::prepare_pathname( $route );
 
@@ -98,7 +98,10 @@ class Router {
 
 	public function dispatch( string $route ): bool {
 
-		return call_user_func_array( $this->routes[ $route ], array( $route ) );
+		return call_user_func_array(
+			array( $this->routes[ $route ], 'execute' ),
+			array( $_SERVER['REQUEST_METHOD'] )
+		);
 
 	}
 
