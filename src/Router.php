@@ -100,7 +100,8 @@ class Router {
 
 		return call_user_func_array(
 			array( $this->routes[ $route ], 'execute' ),
-			array( $_SERVER['REQUEST_METHOD'] )
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			array( $_SERVER['REQUEST_METHOD'], $_REQUEST )
 		);
 
 	}

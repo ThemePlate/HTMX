@@ -26,13 +26,13 @@ class Handler {
 	}
 
 
-	public function execute( string $method ): bool {
+	public function execute( string $method, array $params ): bool {
 
 		if ( empty( $this->handles[ $method ] ) ) {
 			return false;
 		}
 
-		return call_user_func_array( $this->handles[ $method ], array( $this->identifier ) );
+		return call_user_func_array( $this->handles[ $method ], array( $this->identifier, $params ) );
 
 	}
 

@@ -37,7 +37,8 @@ class Loader {
 	}
 
 
-	public function load( string $template ): bool {
+	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
+	public function load( string $template, array $params ): bool {
 
 		if ( ! $this->is_valid( $template ) ) {
 			return false;
