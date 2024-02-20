@@ -61,10 +61,8 @@ class Router {
 		) {
 			$route = Helpers::prepare_pathname( $wp->query_vars[ $this->prefix ] );
 
-			if ( isset( $this->routes[ $route ] ) ) {
-				if ( $this->dispatch( $route ) ) {
-					die();
-				}
+			if ( $this->dispatch( $route, $_SERVER['REQUEST_METHOD'] ) ) {
+				die();
 			}
 		}
 
@@ -92,16 +90,20 @@ class Router {
 	}
 
 
-	public function dispatch( string $route ): bool {
+	public function dispatch( string $route, string $method ): bool {
+
+		if ( empty( $this->routes[ $route ] ) ) {
+			return false;
+		}
 
 		$params = array(
-			'REQUEST_METHOD' => $_SERVER['REQUEST_METHOD'],
+			'REQUEST_METHOD' => $method,
 			...$_REQUEST, // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		);
 
 		return call_user_func_array(
 			array( $this->routes[ $route ], 'execute' ),
-			array( $params['REQUEST_METHOD'], $params )
+			array( $method, $params )
 		);
 
 	}
