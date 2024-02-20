@@ -20,7 +20,13 @@ class RouterTest extends TestCase {
 	 * @dataProvider for_prefix
 	 */
 	public function test_prefix( ?string $prefix, string $expected ): void {
-		$this->assertSame( $expected, ( new Router( $prefix ) )->prefix );
+		if ( null === $prefix ) {
+			$router = new Router();
+		} else {
+			$router = new Router( $prefix );
+		}
+
+		$this->assertSame( $expected, $router->prefix );
 	}
 
 	protected function for_is_valid(): array {

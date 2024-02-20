@@ -11,9 +11,7 @@ class Loader {
 	public readonly string $location;
 
 
-	public function __construct( string $location = null ) {
-
-		$location = null === $location ? Helpers::DEFAULT_NAMEPATH : $location;
+	public function __construct( string $location = Helpers::DEFAULT_NAMEPATH ) {
 
 		if ( ! path_is_absolute( $location ) ) {
 			$location = Helpers::prepare_pathname( $location );

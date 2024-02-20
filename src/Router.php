@@ -14,11 +14,7 @@ class Router {
 	protected array $routes = array();
 
 
-	public function __construct( string $prefix = null ) {
-
-		if ( null === $prefix ) {
-			$prefix = Helpers::DEFAULT_NAMEPATH;
-		}
+	public function __construct( string $prefix = Helpers::DEFAULT_NAMEPATH ) {
 
 		$prefix = Helpers::prepare_pathname( $prefix );
 
