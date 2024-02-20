@@ -10,6 +10,14 @@ class Helpers {
 
 	public const DEFAULT_NAMEPATH = 'htmx';
 
+	public const HTTP_METHODS = array(
+		'GET',
+		'POST',
+		'PUT',
+		'PATCH',
+		'DELETE',
+	);
+
 
 	public static function prepare_pathname( string $value ): string {
 

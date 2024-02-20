@@ -48,7 +48,10 @@ class HTMX {
 
 			$handler = new Handler( $path );
 
-			$handler->handle( 'GET', array( $this->loader, 'load' ) );
+			foreach ( Helpers::HTTP_METHODS as $method ) {
+				$handler->handle( $method, array( $this->loader, 'load' ) );
+			}
+
 			$this->router->add( $path, $handler );
 		}
 
