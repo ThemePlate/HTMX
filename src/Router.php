@@ -98,10 +98,14 @@ class Router {
 
 	public function dispatch( string $route ): bool {
 
+		$params = array(
+			'REQUEST_METHOD' => $_SERVER['REQUEST_METHOD'],
+			...$_REQUEST, // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		);
+
 		return call_user_func_array(
 			array( $this->routes[ $route ], 'execute' ),
-			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			array( $_SERVER['REQUEST_METHOD'], $_REQUEST )
+			array( $params['REQUEST_METHOD'], $params )
 		);
 
 	}
