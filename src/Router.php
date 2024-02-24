@@ -108,4 +108,60 @@ class Router {
 
 	}
 
+
+	public function map( string $route, callable $callback, string $method = null ): bool {
+
+		$route = Helpers::prepare_pathname( $route );
+
+		if ( ! $this->is_valid( $route, false ) ) {
+			return false;
+		}
+
+		if ( empty( $this->routes[ $route ] ) ) {
+			$this->routes[ $route ] = new Handler( $route );
+		}
+
+		$handler = $this->routes[ $route ];
+
+		$handler->handle( $method, $callback );
+
+		return true;
+
+	}
+
+
+	public function get( string $route, callable $callback ): bool {
+
+		return $this->map( $route, $callback, 'GET' );
+
+	}
+
+
+	public function post( string $route, callable $callback ): bool {
+
+		return $this->map( $route, $callback, 'POST' );
+
+	}
+
+
+	public function put( string $route, callable $callback ): bool {
+
+		return $this->map( $route, $callback, 'PUT' );
+
+	}
+
+
+	public function patch( string $route, callable $callback ): bool {
+
+		return $this->map( $route, $callback, 'PATCH' );
+
+	}
+
+
+	public function delete( string $route, callable $callback ): bool {
+
+		return $this->map( $route, $callback, 'DELETE' );
+
+	}
+
 }

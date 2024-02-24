@@ -41,8 +41,8 @@ class RouterTest extends TestCase {
 		$this->assertSame( $expected, $router->prefix );
 	}
 
-	protected function stub_wp_parse_url(): void {
-		expect( 'wp_parse_url' )->once()->andReturnUsing(
+	protected function stub_wp_parse_url( int $count = 1 ): void {
+		expect( 'wp_parse_url' )->times( $count )->andReturnUsing(
 			function ( ...$args ) {
 				return call_user_func_array( 'parse_url', $args );
 			}
@@ -153,6 +153,35 @@ class RouterTest extends TestCase {
 			$this->assertTrue( $router->dispatch( $p_id_r, 'POST' ) );
 		} else {
 			$this->assertFalse( $router->dispatch( $p_id_r, 'GET' ) );
+		}
+	}
+
+	/**
+	 * @dataProvider for_init
+	 */
+	public function test_basic_routes( bool $is_known ): void {
+		$p_id_r = 'test';
+		$router = new Router( $p_id_r );
+
+		if ( $is_known ) {
+			$this->stub_wp_parse_url( count( Helpers::HTTP_METHODS ) );
+
+			foreach ( Helpers::HTTP_METHODS as $method ) {
+				$router->$method(
+					$p_id_r,
+					function () {
+						return true;
+					}
+				);
+			}
+		}
+
+		$return = $router->dispatch( $p_id_r, $is_known ? $method : 'OPTION' );
+
+		if ( $is_known ) {
+			$this->assertTrue( $return );
+		} else {
+			$this->assertFalse( $return );
 		}
 	}
 }
