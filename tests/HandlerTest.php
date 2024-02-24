@@ -32,6 +32,21 @@ class HandlerTest extends TestCase {
 		$this->assertFalse( ( new Handler( 'identifier' ) )->execute( 'method', array() ) );
 	}
 
+	public function test_execute_return_on_empty_identifier() {
+		$handler = new Handler( '' );
+
+		$handler->handle(
+			'OPTION',
+			function () {
+				return true;
+			}
+		);
+
+		$this->assertTrue( $handler->execute( 'OPTION', array() ) );
+		$this->assertArrayNotHasKey( $handler->header_key(), $_SERVER );
+		$this->assertNotEmpty( $_SERVER );
+	}
+
 	public function test_handle_multiple_methods() {
 		$handles    = array(
 			'method1' => array( true, array( false, null ) ),

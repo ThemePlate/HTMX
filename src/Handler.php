@@ -28,6 +28,10 @@ class Handler {
 
 	public function header_key(): string {
 
+		if ( ! $this->identifier ) {
+			return '';
+		}
+
 		return Helpers::header_key( $this->identifier );
 
 	}
@@ -36,6 +40,10 @@ class Handler {
 	public function is_valid(): bool {
 
 		$header = $this->header_key();
+
+		if ( ! $header ) {
+			return true;
+		}
 
 		return isset( $_SERVER[ $header ] ) && $_SERVER[ $header ];
 
