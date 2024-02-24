@@ -28,6 +28,18 @@ class Helpers {
 	}
 
 
+	public static function prepare_header( string $value ): string {
+
+		$value = trim( $value );
+		$value = str_replace( '_', ' ', $value );
+		$value = ucwords( strtolower( $value ) );
+		$value = str_replace( ' ', '-', $value );
+
+		return $value;
+
+	}
+
+
 	public static function caller_path(): string {
 
 		$traced = debug_backtrace(); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace

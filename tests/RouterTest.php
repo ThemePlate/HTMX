@@ -150,6 +150,8 @@ class RouterTest extends TestCase {
 		$router->add( $p_id_r, $handler );
 
 		if ( $is_known ) {
+			$_SERVER[ $handler->header_key() ] = true;
+
 			$this->assertTrue( $router->dispatch( $p_id_r, 'POST' ) );
 		} else {
 			$this->assertFalse( $router->dispatch( $p_id_r, 'GET' ) );

@@ -14,7 +14,7 @@ class Handler {
 
 	public function __construct( string $identifier ) {
 
-		$this->identifier = $identifier;
+		$this->identifier = Helpers::prepare_header( $identifier );
 
 	}
 
@@ -26,9 +26,31 @@ class Handler {
 	}
 
 
+	public function header_key(): string {
+
+		$header = strtoupper( $this->identifier );
+		$header = str_replace( '-', '_', $header );
+
+		return 'HTTP_' . $header;
+
+	}
+
+
+	public function is_valid(): bool {
+
+		$header = $this->header_key();
+
+		return isset( $_SERVER[ $header ] ) && $_SERVER[ $header ];
+
+	}
+
+
 	public function execute( string $method, array $params ): bool {
 
-		if ( empty( $this->handles[ $method ] ) ) {
+		if (
+			! $this->is_valid() ||
+			empty( $this->handles[ $method ] )
+		) {
 			return false;
 		}
 
