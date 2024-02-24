@@ -28,10 +28,7 @@ class Handler {
 
 	public function header_key(): string {
 
-		$header = strtoupper( $this->identifier );
-		$header = str_replace( '-', '_', $header );
-
-		return 'HTTP_' . $header;
+		return Helpers::header_key( $this->identifier );
 
 	}
 

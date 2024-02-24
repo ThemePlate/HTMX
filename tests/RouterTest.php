@@ -50,7 +50,7 @@ class RouterTest extends TestCase {
 	}
 
 	protected function for_init(): array {
-		define( 'EP_ROOT', 64 );
+		defined( 'EP_ROOT' ) || define( 'EP_ROOT', 64 );
 
 		return array(
 			'known'   => array( true ),
@@ -162,15 +162,15 @@ class RouterTest extends TestCase {
 	 * @dataProvider for_init
 	 */
 	public function test_basic_routes( bool $is_known ): void {
-		$p_id_r = 'test';
-		$router = new Router( $p_id_r );
+		$route  = 'tester';
+		$router = new Router();
 
 		if ( $is_known ) {
 			$this->stub_wp_parse_url( count( Helpers::HTTP_METHODS ) );
 
 			foreach ( Helpers::HTTP_METHODS as $method ) {
 				$router->$method(
-					$p_id_r,
+					$route,
 					function () {
 						return true;
 					}
@@ -178,7 +178,9 @@ class RouterTest extends TestCase {
 			}
 		}
 
-		$return = $router->dispatch( $p_id_r, $is_known ? $method : 'OPTION' );
+		$_SERVER[ Helpers::header_key( $router->prefix ) ] = true;
+
+		$return = $router->dispatch( $route, $is_known ? $method : 'OPTION' );
 
 		if ( $is_known ) {
 			$this->assertTrue( $return );

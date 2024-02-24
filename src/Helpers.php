@@ -40,6 +40,16 @@ class Helpers {
 	}
 
 
+	public static function header_key( string $value ): string {
+
+		$header = strtoupper( $value );
+		$header = str_replace( '-', '_', $header );
+
+		return 'HTTP_' . $header;
+
+	}
+
+
 	public static function caller_path(): string {
 
 		$traced = debug_backtrace(); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace

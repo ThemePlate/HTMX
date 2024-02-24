@@ -118,7 +118,7 @@ class Router {
 		}
 
 		if ( empty( $this->routes[ $route ] ) ) {
-			$this->routes[ $route ] = new Handler( $route );
+			$this->routes[ $route ] = new Handler( $this->prefix );
 		}
 
 		$handler = $this->routes[ $route ];
