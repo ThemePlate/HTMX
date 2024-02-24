@@ -20,7 +20,7 @@ class HTMX {
 	protected ?string $cdn = null;
 
 
-	public function __construct( string $identifier = null ) {
+	public function __construct( string $identifier = '' ) {
 
 		$this->router = new Router( $identifier );
 		$this->loader = new Loader( Helpers::caller_path() . $this->router->prefix );
@@ -46,7 +46,7 @@ class HTMX {
 				$item->getPathname()
 			);
 
-			$handler = new Handler( $path );
+			$handler = new Handler( 'HX-Request' );
 
 			foreach ( Helpers::HTTP_METHODS as $method ) {
 				$handler->handle( $method, array( $this->loader, 'load' ) );

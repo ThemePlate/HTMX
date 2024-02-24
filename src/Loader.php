@@ -35,7 +35,6 @@ class Loader {
 	}
 
 
-	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 	public function load( array $data ): bool {
 
 		if ( empty( $data['REQUEST_ROUTE'] ) ) {
