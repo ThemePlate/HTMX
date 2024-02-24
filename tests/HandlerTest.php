@@ -8,15 +8,13 @@ use PHPUnit\Framework\TestCase;
 
 class HandlerTest extends TestCase {
 	public function test_execute_registered_method() {
-		$method     = 'name';
-		$params     = array( 1, 'two' );
-		$handler    = new Handler( 'test' );
-		$identifier = $handler->identifier;
+		$method  = 'name';
+		$params  = array( 1, 'two' );
+		$handler = new Handler( 'test' );
 
 		$handler->handle(
 			$method,
-			function ( $i, $p ) use ( $identifier, $params ) {
-				$this->assertSame( $identifier, $i );
+			function ( $p ) use ( $params ) {
 				$this->assertSame( $params, $p );
 
 				return true;
@@ -48,18 +46,16 @@ class HandlerTest extends TestCase {
 	}
 
 	public function test_handle_multiple_methods() {
-		$handles    = array(
+		$handles = array(
 			'method1' => array( true, array( false, null ) ),
 			'method2' => array( false, array( new stdClass() ) ),
 		);
-		$handler    = new Handler( 'Custom-Request' );
-		$identifier = $handler->identifier;
+		$handler = new Handler( 'Custom-Request' );
 
 		foreach ( $handles as $method => $data ) {
 			$handler->handle(
 				$method,
-				function ( $i, $p ) use ( $identifier, $data ) {
-					$this->assertSame( $identifier, $i );
+				function ( $p ) use ( $data ) {
 					$this->assertSame( $data[1], $p );
 
 					return $data[0];

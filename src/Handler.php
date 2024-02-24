@@ -59,7 +59,7 @@ class Handler {
 			return false;
 		}
 
-		return call_user_func_array( $this->handles[ $method ], array( $this->identifier, $params ) );
+		return call_user_func_array( $this->handles[ $method ], array( $params ) );
 
 	}
 
