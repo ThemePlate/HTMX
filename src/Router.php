@@ -98,6 +98,7 @@ class Router {
 
 		$params = array(
 			'REQUEST_METHOD' => $method,
+			'REQUEST_ROUTE'  => $route,
 			...$_REQUEST, // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		);
 

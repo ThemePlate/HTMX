@@ -36,7 +36,18 @@ class Loader {
 
 
 	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
-	public function load( string $template, array $params ): bool {
+	public function load( array $data ): bool {
+
+		if ( empty( $data['REQUEST_ROUTE'] ) ) {
+			return false;
+		}
+
+		return $this->render( $data['REQUEST_ROUTE'], $data );
+
+	}
+
+
+	public function render( string $template, array $params ): bool {
 
 		if ( ! $this->is_valid( $template ) ) {
 			return false;
