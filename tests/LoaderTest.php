@@ -2,13 +2,14 @@
 
 namespace Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use ThemePlate\HTMX\Helpers;
 use ThemePlate\HTMX\Loader;
 use PHPUnit\Framework\TestCase;
 use function Brain\Monkey\Functions\expect;
 
 class LoaderTest extends TestCase {
-	protected function for_location(): array {
+	public static function for_location(): array {
 		return array(
 			'null'  => array( null, Helpers::DEFAULT_NAMEPATH ),
 			'empty' => array( '', Helpers::DEFAULT_NAMEPATH ),
@@ -16,9 +17,7 @@ class LoaderTest extends TestCase {
 		);
 	}
 
-	/**
-	 * @dataProvider for_location
-	 */
+	#[DataProvider( 'for_location' )]
 	public function test_location( ?string $location, string $expected ): void {
 		expect( 'path_is_absolute' )->once()->andReturn( false );
 
@@ -31,7 +30,7 @@ class LoaderTest extends TestCase {
 		$this->assertSame( __DIR__ . DIRECTORY_SEPARATOR . $expected, $loader->location );
 	}
 
-	protected function for_is_valid_template(): array {
+	public static function for_is_valid_template(): array {
 		return array(
 			array( 'HelpersTest', true ),
 			array( 'RouterTest', true ),
@@ -39,9 +38,7 @@ class LoaderTest extends TestCase {
 		);
 	}
 
-	/**
-	 * @dataProvider for_is_valid_template
-	 */
+	#[DataProvider( 'for_is_valid_template' )]
 	public function test_is_valid_template_absolute( string $name, bool $is_valid ): void {
 		expect( 'path_is_absolute' )->once()->andReturn( true );
 
@@ -52,9 +49,7 @@ class LoaderTest extends TestCase {
 		}
 	}
 
-	/**
-	 * @dataProvider for_is_valid_template
-	 */
+	#[DataProvider( 'for_is_valid_template' )]
 	public function test_is_valid_template_relative( string $name, bool $is_valid ): void {
 		expect( 'path_is_absolute' )->once()->andReturn( false );
 

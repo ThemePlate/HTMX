@@ -3,6 +3,7 @@
 namespace Tests;
 
 use Brain\Monkey;
+use PHPUnit\Framework\Attributes\DataProvider;
 use ThemePlate\HTMX\Handler;
 use ThemePlate\HTMX\Helpers;
 use ThemePlate\HTMX\Router;
@@ -20,7 +21,7 @@ class RouterTest extends TestCase {
 		parent::tearDown();
 	}
 
-	protected function for_prefix(): array {
+	public static function for_prefix(): array {
 		return array(
 			'null'  => array( null, Helpers::DEFAULT_NAMEPATH ),
 			'empty' => array( '', Helpers::DEFAULT_NAMEPATH ),
@@ -28,9 +29,7 @@ class RouterTest extends TestCase {
 		);
 	}
 
-	/**
-	 * @dataProvider for_prefix
-	 */
+	#[DataProvider( 'for_prefix' )]
 	public function test_prefix( ?string $prefix, string $expected ): void {
 		if ( null === $prefix ) {
 			$router = new Router();
@@ -49,7 +48,7 @@ class RouterTest extends TestCase {
 		);
 	}
 
-	protected function for_init(): array {
+	public static function for_init(): array {
 		defined( 'EP_ROOT' ) || define( 'EP_ROOT', 64 );
 
 		return array(
@@ -58,9 +57,7 @@ class RouterTest extends TestCase {
 		);
 	}
 
-	/**
-	* @dataProvider for_init
-	 */
+	#[DataProvider( 'for_init' )]
 	public function test_init( bool $wanted ): void {
 		$prefix = 'test';
 		$router = new Router( $prefix );
@@ -74,7 +71,7 @@ class RouterTest extends TestCase {
 		$this->assertSame( $wanted ? 10 : false, has_action( 'wp', array( $router, 'route' ) ) );
 	}
 
-	protected function for_is_valid(): array {
+	public static function for_is_valid(): array {
 		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 		return array(
 			'base' => array( 'test', true ),
@@ -89,9 +86,7 @@ class RouterTest extends TestCase {
 		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 	}
 
-	/**
-	 * @dataProvider for_is_valid
-	 */
+	#[DataProvider( 'for_is_valid' )]
 	public function test_is_valid( string $path, bool $is_valid ): void {
 		$this->stub_wp_parse_url();
 
@@ -104,8 +99,8 @@ class RouterTest extends TestCase {
 		}
 	}
 
-	protected function for_add_route(): array {
-		$values = $this->for_is_valid();
+	public static function for_add_route(): array {
+		$values = self::for_is_valid();
 
 		$values['known'] = $values['unknown'];
 
@@ -116,9 +111,7 @@ class RouterTest extends TestCase {
 		return $values;
 	}
 
-	/**
-	 * @dataProvider for_add_route
-	 */
+	#[DataProvider( 'for_add_route' )]
 	public function test_add_route( string $path, bool $is_valid ): void {
 		$this->stub_wp_parse_url();
 
@@ -131,9 +124,7 @@ class RouterTest extends TestCase {
 		}
 	}
 
-	/**
-	 * @dataProvider for_init
-	 */
+	#[DataProvider( 'for_init' )]
 	public function test_dispatch( bool $is_known ): void {
 		$this->stub_wp_parse_url();
 
@@ -158,9 +149,7 @@ class RouterTest extends TestCase {
 		}
 	}
 
-	/**
-	 * @dataProvider for_init
-	 */
+	#[DataProvider( 'for_init' )]
 	public function test_basic_routes( bool $is_known ): void {
 		$route  = 'tester';
 		$router = new Router();
