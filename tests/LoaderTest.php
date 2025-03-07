@@ -23,11 +23,7 @@ final class LoaderTest extends TestCase {
 	public function test_location( ?string $location, string $expected ): void {
 		expect( 'path_is_absolute' )->once()->andReturn( false );
 
-		if ( null === $location ) {
-			$loader = new Loader();
-		} else {
-			$loader = new Loader( $location );
-		}
+		$loader = null === $location ? new Loader() : new Loader( $location );
 
 		$this->assertSame( __DIR__ . DIRECTORY_SEPARATOR . $expected, $loader->location );
 	}

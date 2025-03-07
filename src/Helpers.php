@@ -35,9 +35,8 @@ class Helpers {
 		$value = trim( $value );
 		$value = str_replace( '_', ' ', $value );
 		$value = ucwords( strtolower( $value ) );
-		$value = str_replace( ' ', '-', $value );
 
-		return $value;
+		return str_replace( ' ', '-', $value );
 
 	}
 

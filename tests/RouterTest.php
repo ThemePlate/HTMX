@@ -33,11 +33,7 @@ final class RouterTest extends TestCase {
 
 	#[DataProvider( 'for_prefix' )]
 	public function test_prefix( ?string $prefix, string $expected ): void {
-		if ( null === $prefix ) {
-			$router = new Router();
-		} else {
-			$router = new Router( $prefix );
-		}
+		$router = null === $prefix ? new Router() : new Router( $prefix );
 
 		$this->assertSame( $expected, $router->prefix );
 	}
