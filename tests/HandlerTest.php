@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests;
 
 use stdClass;
 use ThemePlate\HTMX\Handler;
 use PHPUnit\Framework\TestCase;
 
-class HandlerTest extends TestCase {
+final class HandlerTest extends TestCase {
 	public function test_execute_registered_method(): void {
 		$method  = 'name';
 		$params  = array( 1, 'two' );

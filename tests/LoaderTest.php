@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -8,7 +10,7 @@ use ThemePlate\HTMX\Loader;
 use PHPUnit\Framework\TestCase;
 use function Brain\Monkey\Functions\expect;
 
-class LoaderTest extends TestCase {
+final class LoaderTest extends TestCase {
 	public static function for_location(): array {
 		return array(
 			'null'  => array( null, Helpers::DEFAULT_NAMEPATH ),

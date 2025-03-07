@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use ThemePlate\HTMX\Helpers;
 use PHPUnit\Framework\TestCase;
 
-class HelpersTest extends TestCase {
+final class HelpersTest extends TestCase {
 	public static function for_prepare_pathname(): array {
 		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 		return array(

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests;
 
 use Brain\Monkey;
@@ -10,7 +12,7 @@ use ThemePlate\HTMX\Router;
 use PHPUnit\Framework\TestCase;
 use function Brain\Monkey\Functions\expect;
 
-class RouterTest extends TestCase {
+final class RouterTest extends TestCase {
 	protected function setUp(): void {
 		parent::setUp();
 		Monkey\setUp();
