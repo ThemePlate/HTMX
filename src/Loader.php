@@ -4,6 +4,8 @@
  * @package ThemePlate
  */
 
+declare(strict_types=1);
+
 namespace ThemePlate\HTMX;
 
 class Loader {
@@ -30,7 +32,13 @@ class Loader {
 
 	protected function file_path( string $name ): string {
 
-		return realpath( $this->location . DIRECTORY_SEPARATOR . $name . '.php' );
+		$path = realpath( $this->location . DIRECTORY_SEPARATOR . $name . '.php' );
+
+		if ( ! $path ) {
+			return '';
+		}
+
+		return $path;
 
 	}
 

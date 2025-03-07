@@ -4,6 +4,8 @@
  * @package ThemePlate
  */
 
+declare(strict_types=1);
+
 namespace ThemePlate\HTMX;
 
 class Handler {

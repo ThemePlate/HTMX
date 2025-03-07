@@ -134,7 +134,7 @@ class RouterTest extends TestCase {
 
 		$handler->handle(
 			'POST',
-			function () {
+			function (): true {
 				return true;
 			}
 		);
@@ -160,7 +160,7 @@ class RouterTest extends TestCase {
 			foreach ( Helpers::HTTP_METHODS as $method ) {
 				$router->$method(
 					$route,
-					function () {
+					function (): true {
 						return true;
 					}
 				);

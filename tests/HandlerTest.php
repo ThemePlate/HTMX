@@ -7,14 +7,14 @@ use ThemePlate\HTMX\Handler;
 use PHPUnit\Framework\TestCase;
 
 class HandlerTest extends TestCase {
-	public function test_execute_registered_method() {
+	public function test_execute_registered_method(): void {
 		$method  = 'name';
 		$params  = array( 1, 'two' );
 		$handler = new Handler( 'test' );
 
 		$handler->handle(
 			$method,
-			function ( $p ) use ( $params ) {
+			function ( $p ) use ( $params ): true {
 				$this->assertSame( $params, $p );
 
 				return true;
@@ -26,16 +26,16 @@ class HandlerTest extends TestCase {
 		$this->assertTrue( $handler->execute( $method, $params ) );
 	}
 
-	public function test_execute_returns_false_if_method_not_registered() {
+	public function test_execute_returns_false_if_method_not_registered(): void {
 		$this->assertFalse( ( new Handler( 'identifier' ) )->execute( 'method', array() ) );
 	}
 
-	public function test_execute_return_on_empty_identifier() {
+	public function test_execute_return_on_empty_identifier(): void {
 		$handler = new Handler( '' );
 
 		$handler->handle(
 			'OPTION',
-			function () {
+			function (): true {
 				return true;
 			}
 		);
@@ -45,7 +45,7 @@ class HandlerTest extends TestCase {
 		$this->assertNotEmpty( $_SERVER );
 	}
 
-	public function test_handle_multiple_methods() {
+	public function test_handle_multiple_methods(): void {
 		$handles = array(
 			'method1' => array( true, array( false, null ) ),
 			'method2' => array( false, array( new stdClass() ) ),
@@ -55,7 +55,7 @@ class HandlerTest extends TestCase {
 		foreach ( $handles as $method => $data ) {
 			$handler->handle(
 				$method,
-				function ( $p ) use ( $data ) {
+				function ( $p ) use ( $data ): bool {
 					$this->assertSame( $data[1], $p );
 
 					return $data[0];
