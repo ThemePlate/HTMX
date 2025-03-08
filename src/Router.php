@@ -112,7 +112,7 @@ class Router {
 	}
 
 
-	public function map( string $route, callable $callback, string $method = null ): bool {
+	public function map( string $route, callable $callback, ?string $method = null ): bool {
 
 		$route = Helpers::prepare_pathname( $route );
 
